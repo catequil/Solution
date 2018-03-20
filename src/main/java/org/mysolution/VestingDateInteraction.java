@@ -14,23 +14,22 @@ public class VestingDateInteraction extends  ConsoleInteraction<LocalDate> {
     @Override
     public LocalDate prompt() {
         do {
-            if (quit) break;
+            if (getQuit()) break;
             System.out.println("Enter record's vesting date [YYYYMMDD]: ");
-            String inputString = scanner.nextLine();
-            //inputString = console.readLine("Enter record's vesting date [YYYYMMDD]: ");
-            quit = "q".equalsIgnoreCase(inputString);
-            if (quit) break;
+            String inputString = getScanner().nextLine();
+            setQuit("q".equalsIgnoreCase(inputString));
+            if (getQuit()) break;
             try {
-                value = LocalDate.parse(inputString, DateTimeFormatter.ofPattern("yyyyMMdd"));
+                setValue(LocalDate.parse(inputString, DateTimeFormatter.ofPattern("yyyyMMdd")));
             } catch (DateTimeParseException ex) {
                 System.out.println("Error: vesting date can only be [YYYYMMDD]");
             }
         } while (invalid());
-        return value;
+        return getValue();
     }
 
     @Override
     protected boolean invalid() {
-        return value == null;
+        return getValue() == null;
     }
 }

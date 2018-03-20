@@ -11,21 +11,20 @@ public class TypeInteraction extends ConsoleInteraction<String> {
     @Override
     public String prompt() {
         do {
-            if (quit) break;
+            if (getQuit()) break;
             System.out.println("Enter record's type [VEST,PERF,SALE]: ");
-            String inputString = scanner.nextLine();
-            //inputString = console.readLine("Enter record's type [VEST,PERF,SALE]: ");
-            quit = "q".equalsIgnoreCase(inputString);
-            if (quit) break;
-            value = inputString;
+            String inputString = getScanner().nextLine();
+            setQuit("q".equalsIgnoreCase(inputString));
+            if (getQuit()) break;
+            setValue(inputString);
 
         } while (invalid());
-        return value;
+        return getValue();
     }
 
     @Override
     protected boolean invalid() {
-        if (value != null && Option.TYPES.contains(value.toUpperCase())) {
+        if (getValue() != null && Option.TYPES.contains(getValue().toUpperCase())) {
             return false;
         } else {
             System.out.println("Error: must be [VEST,PERF,SALE]");

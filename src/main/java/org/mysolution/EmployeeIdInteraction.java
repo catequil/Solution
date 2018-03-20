@@ -12,21 +12,20 @@ public class EmployeeIdInteraction extends ConsoleInteraction<String> {
     @Override
     public String prompt() {
         do {
-            if (quit) break;
+            if (getQuit()) break;
             System.out.println("Enter record's employee id [a-zA-Z0-9]: ");
-            String inputString = scanner.nextLine();
-            //inputString = console.readLine("Enter record's employee id [a-zA-Z0-9]: ");
-            quit = "q".equalsIgnoreCase(inputString);
-            if (quit) break;
-            value = inputString.toUpperCase();
+            String inputString = getScanner().nextLine();
+            setQuit("q".equalsIgnoreCase(inputString));
+            if (getQuit()) break;
+            setValue(inputString.toUpperCase());
         } while (invalid());
-        return value;
+        return getValue();
     }
 
     @Override
     protected boolean invalid() {
         Pattern pattern = Pattern.compile("^[a-zA-Z0-9]+$");
-        if (value.matches(pattern.pattern())) {
+        if (getValue().matches(pattern.pattern())) {
             return false;
         } else {
             System.out.println("Error: employee id can only be [a-zA-Z0-9]");

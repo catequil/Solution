@@ -10,26 +10,27 @@ public class MarketPriceInteraction extends ConsoleInteraction<Double> {
     @Override
     public Double prompt() {
         do {
-            if (quit) break;
+            if (getQuit()) break;
             System.out.println("Enter market price [.01-99999.0]: ");
-            String inputString = scanner.nextLine();
-            //inputString = console.readLine("Enter market price [.01-99999.0]: ");
-            quit = "q".equalsIgnoreCase(inputString);
-            if (quit) break;
+            String inputString = getScanner().nextLine();
+            setQuit("q".equalsIgnoreCase(inputString));
+            if (getQuit()) break;
             try {
-                value = Double.parseDouble(inputString);
+                setValue(Double.parseDouble(inputString));
             } catch (NumberFormatException ex) {
                 System.out.println("Error: market price can only be [.01-99999.0]");
             }
         } while (invalid());
-        return value;
+        return getValue();
     }
 
     @Override
     protected boolean invalid() {
-        if (value > 0 && value < 100000) {
+        if (getValue() != null && getValue() > 0 && getValue() < 100000) {
             return false;
+        } else {
+            System.out.println("Error: market price can only be [.01-99999.0]");
+            return true;
         }
-        return true;
     }
 }
